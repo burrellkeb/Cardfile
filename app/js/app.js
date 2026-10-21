@@ -484,9 +484,14 @@ function zoomPhoto() {
   document.body.appendChild(el);
 }
 
-async function addToContacts(id) {
-  const c = state.cards.find(x => x.id === id);
-  if (!c) return;
+function contactSheet() {
+  openSheet(`
+    <button class="sheet-btn" data-action="contacts-open">${icon('person')}Add to Contacts</button>
+    <button class="sheet-btn" data-action="contacts-share">${icon('upload')}Share contact file</button>
+    <button class="sheet-btn cancel" data-action="close-sheet">Cancel</button>`);
+}
+
+function vcardFor(c) {
   let photoB64 = '';
   if (c.thumb) {
     const bytes = new Uint8Array(c.thumb.data);
@@ -494,9 +499,41 @@ async function addToContacts(id) {
     for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
     photoB64 = btoa(bin);
   }
-  const vcf = buildVCard({ ...c, tagNames: (c.tagIds || []).map(t => tagById(t)?.name).filter(Boolean) }, photoB64);
-  const file = new File([vcf], vcardFileName(c), { type: 'text/vcard' });
-  await shareOrDownload(file, 'Choose Contacts, or Save to Files and open it to add the contact.');
+  return buildVCard({ ...c, tagNames: (c.tagIds || []).map(t => tagById(t)?.name).filter(Boolean) }, photoB64);
+}
+
+/**
+ * iOS shows its "Create New Contact" screen when the page opens a link to a
+ * contact file. The service worker serves the card at ./contact.vcf from a
+ * cache we fill here, so it works offline and needs no server.
+ */
+async function addToContacts(id) {
+  const c = state.cards.find(x => x.id === id);
+  if (!c) return;
+  closeSheet();
+  const vcf = vcardFor(c);
+  try {
+    if (navigator.serviceWorker && navigator.serviceWorker.controller && window.caches) {
+      const url = new URL('contact.vcf', document.baseURI).href;
+      const cache = await caches.open('cardfile-vcard');
+      await cache.put(url, new Response(vcf, { headers: { 'Content-Type': 'text/vcard; charset=utf-8' } }));
+      // make sure the current service worker knows this route before leaving the page
+      const check = await fetch(url + '?check=1', { cache: 'no-store' });
+      if (check.ok && /vcard/.test(check.headers.get('Content-Type') || '')) {
+        location.href = url + '?t=' + Date.now();
+        return;
+      }
+    }
+  } catch (err) { console.warn(err); }
+  // first run before offline support is ready, or an older iOS: fall back to the file
+  await shareContact(id, 'Close and reopen Cardfile, then try again. Or Save to Files and open the file to add the contact.');
+}
+
+async function shareContact(id, hint = 'Pick Save to Files, then open the file in Files and tap Create New Contact.') {
+  const c = state.cards.find(x => x.id === id);
+  if (!c) return;
+  closeSheet();
+  await shareOrDownload(new File([vcardFor(c)], vcardFileName(c), { type: 'text/vcard' }), hint);
 }
 
 async function shareOrDownload(file, hint) {
@@ -679,7 +716,9 @@ document.addEventListener('click', async e => {
     // replace (not push) so Back from the saved card returns to the list, not the same card again
     case 'edit': location.replace('#/edit/' + location.hash.split('/')[2]); break;
     case 'zoom': zoomPhoto(); break;
-    case 'contacts': await addToContacts(location.hash.split('/')[2]); break;
+    case 'contacts': contactSheet(); break;
+    case 'contacts-open': await addToContacts(location.hash.split('/')[2]); break;
+    case 'contacts-share': await shareContact(location.hash.split('/')[2]); break;
     case 'open-tags': go('#/tags'); break;
     case 'clear-search': state.query = ''; state.tagFilter = 'all'; renderList(); break;
     case 'export': {
