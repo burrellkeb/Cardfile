@@ -20,7 +20,7 @@ Needs iOS 16.4 or later.
 The app has to be served over HTTPS once so Safari can install it. GitHub Pages
 does that for free.
 
-1. On your iPhone, open the link https://burrellkeb.github.io/Cardfile/ **in Safari**, tap the **Share** button, then
+1. On your iPhone, open the link https://burrellkeb.github.io/Cardfile/app/ **in Safari**, tap the **Share** button, then
    **Add to Home Screen**.
 2. Open Cardfile from the Home Screen icon. The first scan downloads the text
    reader (about 7 MB); after that it works offline.
