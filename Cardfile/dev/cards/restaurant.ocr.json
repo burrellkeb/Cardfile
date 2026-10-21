@@ -1,0 +1,58 @@
+[
+ {
+  "text": "THE IRON SKILLET",
+  "conf": 95,
+  "h": 121,
+  "y": 304,
+  "x": 543
+ },
+ {
+  "text": "Southern Kitchen & Bar",
+  "conf": 94,
+  "h": 68,
+  "y": 432,
+  "x": 728
+ },
+ {
+  "text": "Jenna Whitfield",
+  "conf": 95,
+  "h": 74,
+  "y": 612,
+  "x": 704
+ },
+ {
+  "text": "General Manager",
+  "conf": 96,
+  "h": 66,
+  "y": 696,
+  "x": 766
+ },
+ {
+  "text": "Phone: 205-555-0123",
+  "conf": 95,
+  "h": 55,
+  "y": 843,
+  "x": 290
+ },
+ {
+  "text": "Fax: 205-555-0124",
+  "conf": 96,
+  "h": 52,
+  "y": 885,
+  "x": 1128
+ },
+ {
+  "text": "Jenna.whitfield@ironskilletbar. com",
+  "conf": 74,
+  "h": 76,
+  "y": 932,
+  "x": 539
+ },
+ {
+  "text": "412 Greensboro Ave, Tuscaloosa AL 35401",
+  "conf": 95,
+  "h": 70,
+  "y": 1048,
+  "x": 521
+ }
+]

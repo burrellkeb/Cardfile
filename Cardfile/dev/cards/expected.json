@@ -1,0 +1,87 @@
+{
+  "furniture": {
+    "name": "Marcus Delgado",
+    "title": "Sales Manager",
+    "company": "Crimson Oak Furniture Co.",
+    "phones": [
+      "205-555-0142",
+      "205-555-0199"
+    ],
+    "emails": [
+      "marcus@crimsonoakfurniture.com"
+    ],
+    "website": "www.crimsonoakfurniture.com",
+    "address_has": [
+      "1820 McFarland",
+      "35404"
+    ]
+  },
+  "restaurant": {
+    "name": "Jenna Whitfield",
+    "title": "General Manager",
+    "company": "The Iron Skillet",
+    "phones": [
+      "205-555-0123"
+    ],
+    "fax": "205-555-0124",
+    "emails": [
+      "jenna.whitfield@ironskilletbar.com"
+    ],
+    "address_has": [
+      "412 Greensboro",
+      "35401"
+    ]
+  },
+  "dentist": {
+    "name": "Priya Raman",
+    "company": "Riverside Family Dentistry",
+    "phones": [
+      "205-555-0177",
+      "205-555-0188"
+    ],
+    "emails": [
+      "appointments@riversidesmiles.com"
+    ],
+    "website": "riversidesmiles.com",
+    "address_has": [
+      "900 University",
+      "Suite 200",
+      "35401"
+    ]
+  },
+  "tech": {
+    "name": "Kevin O'Brien",
+    "title": "Senior Software Engineer",
+    "company": "Northwind Systems, Inc.",
+    "phones": [
+      "415-555-2671"
+    ],
+    "emails": [
+      "kobrien@northwind.io"
+    ],
+    "website": "northwind.io"
+  },
+  "realtor": {
+    "name": "Ana-Sofia Morales",
+    "title": "Realtor",
+    "company": "Hartwell Realty Group",
+    "phones": [
+      "555-867-5309"
+    ],
+    "emails": [
+      "ana@hartwellrealty.com"
+    ]
+  },
+  "dark": {
+    "name": "Theo Park",
+    "title": "Creative Director",
+    "company": "Lumen Studio",
+    "phones": [
+      "312-555-0110"
+    ],
+    "emails": [
+      "hello@lumen.studio"
+    ],
+    "website": "lumen.studio"
+  }
+}
