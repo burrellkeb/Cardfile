@@ -20,21 +20,9 @@ Needs iOS 16.4 or later.
 The app has to be served over HTTPS once so Safari can install it. GitHub Pages
 does that for free.
 
-1. Sign in at **github.com** (make a free account if you need one).
-2. Click **+ → New repository**. Name it `cardfile`, choose **Public**, and create it.
-   (The code is public; your cards are not. They only ever live on your phone.)
-3. On the new repo page click **uploading an existing file**. Open the `app` folder
-   from this zip on your PC, select **everything inside it** (`index.html`, `css`,
-   `js`, `icons`, `vendor`, `sw.js`, `manifest.webmanifest`) and drag it all into
-   the browser. Click **Commit changes**.
-   `index.html` must end up at the top level of the repo, not inside an `app` folder.
-4. Go to **Settings → Pages**. Under *Build and deployment* pick **Deploy from a
-   branch**, branch **main**, folder **/ (root)**, and click **Save**.
-5. Wait a minute, refresh that page, and it shows your link:
-   `https://YOUR-USERNAME.github.io/cardfile/`
-6. On your iPhone, open that link **in Safari**, tap the **Share** button, then
+1. On your iPhone, open that link **in Safari**, tap the **Share** button, then
    **Add to Home Screen**.
-7. Open Cardfile from the Home Screen icon. The first scan downloads the text
+2. Open Cardfile from the Home Screen icon. The first scan downloads the text
    reader (about 7 MB); after that it works offline.
 
 ## Using it
