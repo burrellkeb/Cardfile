@@ -3,7 +3,7 @@
 // Text-reader engine (vendor/): cache first, since it never changes.
 // Bump VERSION when you change the app to clear old caches.
 
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL = `cardfile-shell-${VERSION}`;
 const ENGINE = `cardfile-engine-${VERSION}`;
 
@@ -27,7 +27,7 @@ self.addEventListener('install', event => {
 
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
-    for (const key of await caches.keys()) if (![SHELL, ENGINE].includes(key)) await caches.delete(key);
+    for (const key of await caches.keys()) if (![SHELL, ENGINE, 'cardfile-vcard'].includes(key)) await caches.delete(key);
     await self.clients.claim();
   })());
 });
@@ -35,6 +35,16 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const req = event.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+
+  // "Add to Contacts": the app puts the contact file in this cache, then opens it
+  if (new URL(req.url).pathname.endsWith('/contact.vcf')) {
+    event.respondWith((async () => {
+      const hit = await (await caches.open('cardfile-vcard')).match(req, { ignoreSearch: true });
+      return hit ? new Response(hit.body, { headers: { 'Content-Type': 'text/vcard; charset=utf-8', 'Content-Disposition': 'inline; filename="contact.vcf"' } })
+        : new Response('Contact not found', { status: 404 });
+    })());
+    return;
+  }
 
   if (req.url.includes('/vendor/')) {
     event.respondWith((async () => {
